@@ -109,7 +109,6 @@ class App extends Component {
           Bienvenidos a la boda de Moises y Mª Sol
         </p>
         { this.renderLoginButton() }
-
       </div>
     );
   }
