@@ -68,23 +68,26 @@ class App extends Component {
     if(this.state.user){
       return (
         <div>
-          <p>Hola {this.state.user.displayName} </p>
-          <img width="200px" src={this.state.user.photoURL} alt="AVATAR" />
-          <br/>
-          <button onClick={this.handleLogout}>Cerrar sesión con Google</button>
+          <figCaption className="App-card-footer">
+            <img className="App-card-avatar" alt={this.state.user.displayName}
+              src={this.state.user.photoURL}></img>
+            <span className="App-card-name">{this.state.user.displayName}</span>
+            <button onClick={this.handleLogout}>Cerrar sesión</button>
+          </figCaption>
           <FileUpload onUpload={this.handleUpload}/>
-
           {
             this.state.pictures.map(picture=>(
-                <div>
-                  <img width="600px" alt="description" src={picture.image}></img>
-                  <br/>
-                  <img width="48px" alt={picture.displayName} src={picture.photoURL}></img>
-                  <span>{picture.displayName}</span>
+                <div className="App-card">
+                  <figure className="App-card-image">
+                    <img alt="description" src={picture.image}></img>
+                    <figCaption className="App-card-footer">
+                      <img className="App-card-avatar" alt={picture.displayName} src={picture.photoURL}></img>
+                      <span className="App-card-name">{picture.displayName}</span>
+                    </figCaption>
+                  </figure>
                 </div>
-            ))
+            )).reverse()
           }
-
         </div>
         )
     }else{
@@ -100,10 +103,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>Welcome to T3chFest</h2>
+          <h1>Weddingram</h1>
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          Bienvenidos a la boda de Moises y Mª Sol
         </p>
         { this.renderLoginButton() }
 
