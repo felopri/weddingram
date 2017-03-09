@@ -4,16 +4,29 @@ class FileUpload extends Component {
 	constructor () {
 		super();
 		this.state = {
-			uploadValue: 0
+			uploadValue: 0,
+			picture: null
 		};
-		this.handleOnChange =
-		this.handleOnChange.bind(this);
+		this.handleUpload = this.handleUpload.bind(this);
 	}
-	handleOnChange (event) {
+	handleUpload (event) {
 		const file = event.target.files[0];
-		const storageRef =
-		firebase.storage().ref(`fotos/${file.name}`);
+		const storageRef = firebase.storage().ref(`/pictures/${file.name}`);
 		const tasks = storageRef.put(file);
+
+		tasks.on('state_changed', snapshot => {
+			let percentage = (snapshot.bytesTransfered / snapshot.totalBytes)*100;
+			this.setState({
+				uploadValue : percentage
+			})
+		}, error => {
+			console.error(error.message)
+		}, () => {
+			this.setState({
+				uploadValue : 100,
+				picture: tasks.snapshot.downloadURL
+			});
+		});
 	}
 	render () {
 		return (
@@ -22,7 +35,7 @@ class FileUpload extends Component {
 					{this.state.uploadValue} %
 				</progress>
 				<br/>
-				<input type="file" onChange={this.handleOnChange}/>
+				<input type="file" onChange={this.handleUpload}/>
 				<br/>
 				<img width="320" src={this.state.picture} alt=""/>
 			</div>
