@@ -1,2 +1,2 @@
 # weddingram
-Weddingram app to up and show show pitcures at weddings
+Weddingram app to load and show show pitcures at weddings
